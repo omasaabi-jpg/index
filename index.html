@@ -227,7 +227,7 @@
                                     <span class="font-bold text-lg">${pkg.name}</span>
                                     <p class="text-sm text-slate-500">المنصات: ${pkg.platforms}</p>
                                     <ul class="mt-3 mb-3 text-sm text-slate-600 space-y-2 border-t pt-3">
-                                        ${pkg.features.map(f => <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>${f}</li>).join('')}
+                                        ${pkg.features.map(f => `<li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('')}
                                     </ul>
                                     ${adSetupOption}
                                     <p class="text-md font-bold text-blue-600 mt-4 text-left">${pkg.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</p>
@@ -261,18 +261,18 @@
                     const packageData = data.packages.find(p => p.id === packageId);
                     
                     total += price;
-                    summaryHTML += <div class="flex justify-between items-center"><span>باقة الإعلانات: ${packageData.name}</span><span class="font-medium">${price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</span></div>;
+                    summaryHTML += `<div class="flex justify-between items-center"><span>باقة الإعلانات: ${packageData.name}</span><span class="font-medium">${price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</span></div>`;
                     
-                    let packageMessage = *باقة إدارة الإعلانات: ${packageData.name}*\n;
+                    let packageMessage = `*باقة إدارة الإعلانات: ${packageData.name}*\n`;
                     packageMessage += packageData.full_features.map(f => `  - ${f}`).join('\n');
                     
-                    const adSetupCheckbox = document.querySelector(#setup-${packageId}:checked);
+                    const adSetupCheckbox = document.querySelector(`#setup-${packageId}:checked`);
                     if (adSetupCheckbox) {
                         const setupPrice = parseFloat(adSetupCheckbox.value);
                         const setupName = adSetupCheckbox.dataset.name;
                         total += setupPrice;
-                        summaryHTML += <div class="flex justify-between items-center text-sm"><span>${setupName}</span><span class="font-medium">${setupPrice.toLocaleString('en-US')} ر.س</span></div>;
-                        packageMessage += \n  - ${setupName};
+                        summaryHTML += `<div class="flex justify-between items-center text-sm"><span>${setupName}</span><span class="font-medium">${setupPrice.toLocaleString('en-US')} ر.س</span></div>`;
+                        packageMessage += `\n  - ${setupName}`;
                     }
 
                     messageItems.push(packageMessage);
@@ -285,8 +285,8 @@
                         const price = parseFloat(service.value);
                         const name = service.dataset.name;
                         total += price;
-                        summaryHTML += <div class="flex justify-between items-center text-sm"><span>${name}</span><span class="font-medium">${price.toLocaleString('en-US')} ر.س</span></div>;
-                        messageItems.push(- ${name});
+                        summaryHTML += `<div class="flex justify-between items-center text-sm"><span>${name}</span><span class="font-medium">${price.toLocaleString('en-US')} ر.س</span></div>`;
+                        messageItems.push(`- ${name}`);
                     });
                 }
 
@@ -296,14 +296,14 @@
                 if (summaryHTML === '') {
                     quoteSummary.innerHTML = '<p class="italic">الرجاء اختيار باقة للبدء...</p>';
                     const defaultMessage = encodeURIComponent('مرحباً، أرغب في الاستفسار عن خدماتكم.');
-                    whatsappLink.href = https://wa.me/${phoneNumber}?text=${defaultMessage};
+                    whatsappLink.href = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
                 } else {
                     quoteSummary.innerHTML = summaryHTML;
-                    const finalMessage = مرحباً،\n\nأرغب في طلب الخدمات التالية:\n\n${messageItems.join('\n')}\n\n*الإجمالي:* ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س;
-                    whatsappLink.href = https://wa.me/${phoneNumber}?text=${encodeURIComponent(finalMessage)};
+                    const finalMessage = `مرحباً،\n\nأرغب في طلب الخدمات التالية:\n\n${messageItems.join('\n')}\n\n*الإجمالي:* ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س`;
+                    whatsappLink.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(finalMessage)}`;
                 }
                 
-                totalPriceEl.textContent = ${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ر.س;
+                totalPriceEl.textContent = `${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ر.س`;
             }
 
             async function getServiceRecommendation() {
@@ -364,7 +364,7 @@
                             }
                         };
                         const apiKey = "AIzaSyAXJB9gC0Z9Mky5raHe-gUOnPD5hK7gDfk"; 
-                        const apiUrl = https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey};
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                         
                         const response = await fetch(apiUrl, {
                             method: 'POST',
@@ -390,7 +390,7 @@
                                 
                                 document.querySelectorAll('input[name="ad_setup"]').forEach(chk => chk.checked = false);
                                 if (parsedJson.ad_account_setup_recommended) {
-                                    const setupCheckbox = document.getElementById(setup-${parsedJson.recommended_package_id});
+                                    const setupCheckbox = document.getElementById(`setup-${parsedJson.recommended_package_id}`);
                                     if(setupCheckbox) setupCheckbox.checked = true;
                                 }
 
@@ -416,14 +416,14 @@
                         // If the server is busy (503) and we have retries left, wait and try again.
                         if (response.status === 503 && attempt < maxRetries - 1) {
                             const delay = initialDelay * Math.pow(2, attempt);
-                            console.warn(API is busy (503). Retrying in ${delay}ms... (Attempt ${attempt + 1}/${maxRetries}));
+                            console.warn(`API is busy (503). Retrying in ${delay}ms... (Attempt ${attempt + 1}/${maxRetries})`);
                             await new Promise(resolve => setTimeout(resolve, delay));
                             continue; // Go to the next iteration of the loop
                         } else {
                             // For other errors or if it's the last failed attempt, throw an error to exit the loop.
                             const errorBody = await response.text();
                             console.error("API Error Response:", errorBody);
-                            throw new Error(فشل طلب الـ API مع الحالة: ${response.status});
+                            throw new Error(`فشل طلب الـ API مع الحالة: ${response.status}`);
                         }
                     }
                 } catch (error) {
